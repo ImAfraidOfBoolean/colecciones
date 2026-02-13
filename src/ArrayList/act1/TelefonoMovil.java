@@ -51,9 +51,13 @@ public class TelefonoMovil {
         return myContacts.get(findContact(name));
     }
 
-    public void printContacts(){
-        for (Contacto contacto : myContacts)
-            System.out.println(contacto.getName()+" --> "+ contacto.getPhoneNumber());
+    public void printContacts() {
+        if (myContacts.isEmpty())
+            System.out.println("Array vacio");
+        else
+            for (Contacto contacto : myContacts)
+                System.out.println(contacto.getName()+" --> "+ contacto.getPhoneNumber());
+        System.out.println();
     }
 
 }
