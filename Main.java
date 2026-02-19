@@ -1,17 +1,12 @@
 package LinkedList;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        boolean continuar = true;
-
-        Album album1 = new Album("Midnight Signals","Ethan Blackwood");
-        Album album2 = new Album("Waves of Tomorrow","Lily Hart");
+        Album album1 = new Album("Midnight Signals", "Ethan Blackwood");
+        Album album2 = new Album("Waves of Tomorrow", "Lily Hart");
         ArrayList<Album> albums = new ArrayList<>();
         album1.addSong("Neon Skies", 3.9);
         album1.addSong("Echoes in the Dark", 4.4);
@@ -25,28 +20,134 @@ public class Main {
         albums.add(album2);
 
         // ELIMINAR
-        Iterator<Album> it = albums.iterator();
-        while (it.hasNext()){
-            System.out.println(it.next());
-        }
+//        Iterator<Album> it = albums.iterator();
+//        while (it.hasNext()){
+//            System.out.println(it.next());
+//        }
 
-        LinkedList<Cancion> canciones = new LinkedList<>();
+        LinkedList<Cancion> playList = new LinkedList<>();
 
-        album1.addToPlayList("Neon Skies",canciones);
-        album1.addToPlayList(1,canciones);
-        album1.addToPlayList(0,canciones);
-        album2.addToPlayList("djkal", canciones);
-        printSong(canciones);
+        album1.addToPlayList("Neon Skies", playList);
+        album1.addToPlayList("aaaa", playList); // no se añade
+        album1.addToPlayList(1, playList);
+        album1.addToPlayList(0, playList);// no se añade
+        album2.addToPlayList("djkal", playList); // no se añade
+        album2.addToPlayList("Golden Horizon", playList);
+        album2.addToPlayList("Golden Horizon", playList); // no se añade
+        printSong(playList);
+        System.out.println();
+        play(playList);
+
+
     }
 
-    public static void printSong(LinkedList<Cancion> canciones){
-        ListIterator<Cancion> it = canciones.listIterator();
+    public static void printSong(LinkedList<Cancion> playList) {
+        ListIterator<Cancion> it = playList.listIterator();
 
-        if(canciones.isEmpty()){
+        if (playList.isEmpty()) {
             System.out.println("vacio");
         }
-        while (it.hasNext()){
+        while (it.hasNext()) {
             System.out.println(it.next());
         }
+    }
+
+    public static void play(LinkedList<Cancion> playList) {
+        boolean salir = false;
+        boolean mostrarMenu = true;
+        boolean haciaAdelante = true;
+        Scanner sc = new Scanner(System.in);
+        ListIterator<Cancion> it = playList.listIterator();
+
+        if (it.hasNext()) {
+            System.out.printf("Reproduciendo: %s%n%n", it.next());
+        }
+        while (!salir) {
+            try {
+                if (playList.isEmpty())
+                    System.out.println("vacio");
+                if (mostrarMenu) {
+                    menu();
+                    mostrarMenu = false;
+                }
+                System.out.print("Introduce un valor: ");
+                int opc = sc.nextInt();
+                switch (opc) {
+                    case 0:
+                        salir = true;
+                        break;
+                    case 1:
+                        if (!haciaAdelante) {
+                            if (it.hasNext())
+                                it.next();
+                            haciaAdelante = true;
+                        }
+                        if (it.hasNext()) {
+                            System.out.printf("Reproduciendo: %s%n%n", it.next());
+                        } else {
+                            while (it.hasPrevious()) {
+                                it.previous();
+                            }
+                            System.out.printf("Reproduciendo: %s%n%n", it.next());
+                        }
+                        break;
+                    case 2:
+                        if (haciaAdelante) {
+                            if (it.hasPrevious())
+                                it.previous();
+                            haciaAdelante = false;
+                        }
+                        if (it.hasPrevious()) {
+                            System.out.printf("Reproduciendo: %s%n%n", it.previous());
+
+                        } else {
+                            while (it.hasNext()) {
+                                it.next();
+                            }
+                            System.out.printf("Reproduciendo: %s%n%n", it.previous());
+                        }
+                        break;
+                    case 3:
+                        if (haciaAdelante) {
+                            if (it.hasPrevious()) {
+                                System.out.printf("Reproduciendo: %s%n%n", it.previous());
+
+                                haciaAdelante = false;
+                            }
+                        } else {
+                            if (it.hasNext()) {
+                                System.out.printf("Reproduciendo: %s%n%n", it.next());
+                                haciaAdelante = true;
+                            }
+                        }
+                        break;
+                    case 4:
+                        for (Cancion list : playList)
+                            System.out.println("Reproduciendo: " + list);
+                    case 5:
+                        mostrarMenu = true;
+                    default:
+                        throw new InputMismatchException("Unexpected value: " + opc);
+                }
+            } catch (IllegalStateException | InputMismatchException e) {
+                if (e.getMessage() == null) {
+                    System.out.println("Unexpected value");
+                    sc.nextLine();
+                } else
+                    System.out.println(e.getMessage());
+            }
+        }
+        System.out.println("Has salido del programa");
+    }
+
+    public static void menu() {
+        System.out.println("""
+                0 – Salir de la lista de reproducción\s
+                1 – Reproducir siguiente canción en la lista\s
+                2 – Reproducir la canción previa de la lista \s
+                3 – Repetir la canción actual\s
+                4 – Imprimir la lista de playList en la playlist\s
+                5 – Volver a imprimir el menú.\s
+                """);
     }
 }
