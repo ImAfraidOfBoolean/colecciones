@@ -11,14 +11,14 @@ public class Main {
         album1.addSong("Neon Skies", 3.9);
         album1.addSong("Echoes in the Dark", 4.4);
         album1.addSong("Last Train Home", 5d);
-        album1.addSong("City of Static",3.91);
-        album1.addSong("Broken Satellites",4.2);
+        album1.addSong("City of Static", 3.91);
+        album1.addSong("Broken Satellites", 4.2);
 
         album2.addSong("Golden Horizon", 4.21);
         album2.addSong("Fading Footsteps", 3.41);
         album2.addSong("Chasing the Sunrise", 3.4);
-        album2.addSong("Driftwood Dreams",4.3);
-        album2.addSong("Tides Between Us",3.7);
+        album2.addSong("Driftwood Dreams", 4.3);
+        album2.addSong("Tides Between Us", 3.7);
 
         albums.add(album1);
         albums.add(album2);
@@ -70,10 +70,9 @@ public class Main {
             try {
                 if (playList.isEmpty())
                     System.out.println("vacio");
-                if (mostrarMenu) {
+                if (mostrarMenu)
                     menu();
-                    mostrarMenu = false;
-                }
+
                 System.out.print("Introduce un valor: ");
                 int opc = sc.nextInt();
                 switch (opc) {
@@ -89,10 +88,7 @@ public class Main {
                         if (it.hasNext()) {
                             System.out.printf("Reproduciendo: %s%n%n", it.next());
                         } else {
-                            while (it.hasPrevious()) {
-                                it.previous();
-                            }
-                            System.out.printf("Reproduciendo: %s%n%n", it.next());
+                            System.out.println("Has llegado al final");
                         }
                         break;
                     case 2:
@@ -105,10 +101,7 @@ public class Main {
                             System.out.printf("Reproduciendo: %s%n%n", it.previous());
 
                         } else {
-                            while (it.hasNext()) {
-                                it.next();
-                            }
-                            System.out.printf("Reproduciendo: %s%n%n", it.previous());
+                            System.out.println("Has llegado al inicio");
                         }
                         break;
                     case 3:
@@ -128,11 +121,28 @@ public class Main {
                     case 4:
                         for (Cancion list : playList)
                             System.out.println("Reproduciendo: " + list);
+                        break;
                     case 5:
                         mostrarMenu = true;
+                        break;
+
+                    case 6:
+                        it.remove();
+                        if (it.hasNext()) {
+                            System.out.printf("Reproduciendo: %s%n%n", it.next());
+
+                        } else if (it.hasPrevious()) {
+                            System.out.printf("Reproduciendo: %s%n%n", it.previous());
+
+                        } else {
+                            System.out.println("La playlist está vacía.");
+                        }
+                        break;
                     default:
                         throw new InputMismatchException("Unexpected value: " + opc);
                 }
+                mostrarMenu = false;
+
             } catch (IllegalStateException | InputMismatchException e) {
                 if (e.getMessage() == null) {
                     System.out.println("Unexpected value");
@@ -152,6 +162,7 @@ public class Main {
                 3 – Repetir la canción actual\s
                 4 – Imprimir la lista de playList en la playlist\s
                 5 – Volver a imprimir el menú.\s
+                6 - Eliminar canción actual de la playlist\s
                 """);
     }
 }
