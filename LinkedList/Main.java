@@ -10,11 +10,15 @@ public class Main {
         ArrayList<Album> albums = new ArrayList<>();
         album1.addSong("Neon Skies", 3.9);
         album1.addSong("Echoes in the Dark", 4.4);
-        album1.addSong("Last Train Home", 5.1);
+        album1.addSong("Last Train Home", 5d);
+        album1.addSong("City of Static",3.91);
+        album1.addSong("Broken Satellites",4.2);
 
         album2.addSong("Golden Horizon", 4.21);
         album2.addSong("Fading Footsteps", 3.41);
         album2.addSong("Chasing the Sunrise", 3.4);
+        album2.addSong("Driftwood Dreams",4.3);
+        album2.addSong("Tides Between Us",3.7);
 
         albums.add(album1);
         albums.add(album2);
