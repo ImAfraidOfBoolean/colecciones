@@ -23,21 +23,18 @@ public class Main {
         albums.add(album1);
         albums.add(album2);
 
-        // ELIMINAR
-//        Iterator<Album> it = albums.iterator();
-//        while (it.hasNext()){
-//            System.out.println(it.next());
-//        }
-
         LinkedList<Cancion> playList = new LinkedList<>();
 
         album1.addToPlayList("Neon Skies", playList);
         album1.addToPlayList("aaaa", playList); // no se añade
         album1.addToPlayList(1, playList);
         album1.addToPlayList(0, playList);// no se añade
+        album1.addToPlayList("City of Static", playList);
         album2.addToPlayList("djkal", playList); // no se añade
         album2.addToPlayList("Golden Horizon", playList);
         album2.addToPlayList("Golden Horizon", playList); // no se añade
+        album2.addToPlayList(3, playList);
+
         printSong(playList);
         System.out.println();
         play(playList);
@@ -47,12 +44,14 @@ public class Main {
 
     public static void printSong(LinkedList<Cancion> playList) {
         ListIterator<Cancion> it = playList.listIterator();
-
+        int index = 1;
+        System.out.println("Canciones de la playlist: ");
         if (playList.isEmpty()) {
             System.out.println("vacio");
         }
         while (it.hasNext()) {
-            System.out.println(it.next());
+            System.out.printf("%s. %s%n", index, it.next());
+            index++;
         }
     }
 
@@ -108,7 +107,6 @@ public class Main {
                         if (haciaAdelante) {
                             if (it.hasPrevious()) {
                                 System.out.printf("Reproduciendo: %s%n%n", it.previous());
-
                                 haciaAdelante = false;
                             }
                         } else {
@@ -119,8 +117,7 @@ public class Main {
                         }
                         break;
                     case 4:
-                        for (Cancion list : playList)
-                            System.out.println("Reproduciendo: " + list);
+                        printSong(playList);
                         break;
                     case 5:
                         mostrarMenu = true;
