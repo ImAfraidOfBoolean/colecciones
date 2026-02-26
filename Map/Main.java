@@ -1,13 +1,11 @@
 package Map;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private Map<Integer,Ubicacion> ubicaciones = new HashMap<>();
 
-    public Main(Map<Integer, Ubicacion> ubicaciones) {
+    public Main() {
         ubicaciones.put(0,new Ubicacion(0,"Estás sentado en la clase de programación"));
         ubicaciones.put(1,new Ubicacion(1,"Estás en la cima de una montaña"));
         ubicaciones.put(2,new Ubicacion(2,"Estás bañándote en la playa"));
@@ -19,7 +17,6 @@ public class Main {
         ubicaciones.get(1).addExit("S",4);
         ubicaciones.get(1).addExit("E",2);
         ubicaciones.get(1).addExit("O",3);
-        ubicaciones.get(1).addExit("Q",0);
 
         ubicaciones.get(2).addExit("N",5);
 
@@ -30,16 +27,41 @@ public class Main {
 
         ubicaciones.get(5).addExit("O",2);
         ubicaciones.get(5).addExit("S",1);
+
+        for(int i = 0; i<=5; i++){
+            ubicaciones.get(i).addExit("Q",0);
+        }
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        Main main = new Main();
+        String valor = "";
+        int id = 1;
 
+        do {
+            try {
+                System.out.println(main.ubicaciones.get(id).getDescripcion());
+                System.out.print("Tus salidas validas son: ");
+                for (String dir : main.ubicaciones.get(id).getExists().keySet()) {
+                    System.out.print(dir + " ");
+                }
+                System.out.println();
+
+                valor = sc.nextLine().toUpperCase();
+                if(main.ubicaciones.get(id).getExists().containsKey(valor)){
+                    id = main.ubicaciones.get(id).getExists().get(valor);
+                }
+                else throw new InputMismatchException(String.format("Valor '%s' es invalido", valor));
+            }
+            catch (InputMismatchException e){
+                System.out.println(e.getMessage());
+            }
+        }while (!valor.equalsIgnoreCase("Q"));
+        System.out.println("Has salido del programa");
     }
 
-
-
-    // getters & setters
+// getters & setters
 
     public Map<Integer, Ubicacion> getUbicaciones() {
         return ubicaciones;
