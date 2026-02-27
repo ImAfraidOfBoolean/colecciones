@@ -15,8 +15,8 @@ public class Main {
 
         ubicaciones.get(1).addExit("N",5);
         ubicaciones.get(1).addExit("S",4);
-        ubicaciones.get(1).addExit("E",2);
-        ubicaciones.get(1).addExit("O",3);
+        ubicaciones.get(1).addExit("E",3);
+        ubicaciones.get(1).addExit("O",2);
 
         ubicaciones.get(2).addExit("N",5);
 
@@ -46,7 +46,7 @@ public class Main {
                 for (String dir : main.ubicaciones.get(id).getExists().keySet()) {
                     System.out.print(dir + " ");
                 }
-                System.out.println();
+                System.out.print("\nIntroduce un valor: ");
 
                 valor = sc.nextLine().toUpperCase();
                 if(main.ubicaciones.get(id).getExists().containsKey(valor)){
