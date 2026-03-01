@@ -94,7 +94,7 @@ public class Main {
             System.out.println(lunas);
 
         Set<CuerpoCeleste> interseccion = new HashSet<>();
-        for(CuerpoCeleste inter)
+        Set<CuerpoCeleste> diferencia = new HashSet<>();
 
     }
 }
